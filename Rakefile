@@ -7,7 +7,7 @@ begin
     gem.name = "xpcomcore-rubygem"
     gem.summary = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.description = %Q{Gem to allow for using XPCOMCore via RubyGems}
-    gem.email = "gabriel.gironda@centro.net"
+    gem.email = "gabriel.gironda@gmail.com"
     gem.homepage = "http://github.com/gabrielg/xpcomcore-rubygem"
     gem.authors = ["ggironda"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings

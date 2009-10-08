@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xpcomcore-rubygem}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
@@ -24,9 +24,13 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "bin/xpcomcore-firefox",
+     "bin/xpcomcore-rubygem-install",
+     "extension/install.rdf",
      "lib/xpcomcore-rubygem.rb",
      "test/test_helper.rb",
-     "test/xpcomcore-rubygem_test.rb"
+     "test/xpcomcore-rubygem_test.rb",
+     "xpcomcore-rubygem.gemspec"
   ]
   s.homepage = %q{http://github.com/gabrielg/xpcomcore-rubygem}
   s.post_install_message = %q{
@@ -53,14 +57,14 @@ usage information on using it to install the bootstrapper code for this gem.
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<colored>, [">= 0"])
       s.add_runtime_dependency(%q<sys-uname>, [">= 0"])
+      s.add_development_dependency(%q<colored>, [">= 0"])
     else
-      s.add_dependency(%q<colored>, [">= 0"])
       s.add_dependency(%q<sys-uname>, [">= 0"])
+      s.add_dependency(%q<colored>, [">= 0"])
     end
   else
-    s.add_dependency(%q<colored>, [">= 0"])
     s.add_dependency(%q<sys-uname>, [">= 0"])
+    s.add_dependency(%q<colored>, [">= 0"])
   end
 end

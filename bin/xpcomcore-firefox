@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require 'sys/uname'
+require 'pathname'
+ENV['XPCOMCORE_BOOTSTRAP'] = (Pathname(__FILE__).parent.parent + "xpcomcore/bootstrapper.js").expand_path.to_s
+exec("firefox-bin", *ARGV)

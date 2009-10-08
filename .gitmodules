@@ -1,0 +1,3 @@
+[submodule "xpcomcore"]
+	path = xpcomcore
+	url = git://github.com/gabrielg/xpcomcore.git

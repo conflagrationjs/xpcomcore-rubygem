@@ -13,7 +13,7 @@ begin
     gem.email = "gabriel.gironda@gmail.com"
     gem.homepage = "http://github.com/gabrielg/xpcomcore-rubygem"
     gem.authors = ["ggironda"]
-    
+    gem.files = (gem.files + FileList["xpcomcore/**/*"]).uniq
     gem.post_install_message = <<-EOF;
 
 #{"".ljust(80).red_on_blue.bold}

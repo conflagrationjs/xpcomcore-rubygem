@@ -3,14 +3,31 @@ require 'rake'
 
 begin
   require 'jeweler'
+  require 'colored'
+  
   Jeweler::Tasks.new do |gem|
     gem.name = "xpcomcore-rubygem"
+    gem.executables = %w[xpcomcore-rubygem-install xpcomcore-firefox]
     gem.summary = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.description = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.email = "gabriel.gironda@gmail.com"
     gem.homepage = "http://github.com/gabrielg/xpcomcore-rubygem"
     gem.authors = ["ggironda"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    
+    gem.post_install_message = <<-EOF;
+
+#{"".ljust(80).red_on_blue.bold}
+#{"PAY HEED TO THIS ANNOYING MESSAGE".center(80).red_on_blue.bold}
+#{"".ljust(80).red_on_blue.bold}
+
+The XPCOMCore gem has been installed but you still need to complete installation
+by hand. Run the command #{'xpcomcore-rubygem-install'.underline.bold} without options to get
+usage information on using it to install the bootstrapper code for this gem.
+
+EOF
+
+    gem.add_dependency "sys-uname"
+    gem.add_development_dependency "colored"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -54,3 +71,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+

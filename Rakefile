@@ -14,17 +14,16 @@ begin
     gem.homepage = "http://github.com/gabrielg/xpcomcore-rubygem"
     gem.authors = ["ggironda"]
     gem.files = (gem.files + FileList["xpcomcore/**/*"]).uniq
-    gem.post_install_message = <<-EOF;
+    gem.post_install_message = %Q[
 
-#{"".ljust(80).red_on_blue.bold}
-#{"PAY HEED TO THIS ANNOYING MESSAGE".center(80).red_on_blue.bold}
-#{"".ljust(80).red_on_blue.bold}
-
-The XPCOMCore gem has been installed but you still need to complete installation
-by hand. Run the command #{'xpcomcore-rubygem-install'.underline.bold} without options to get
-usage information on using it to install the bootstrapper code for this gem.
-
-EOF
+    STEP 1. OBTAIN A PIG. THIS ONE WILL DO:                         
+ 
+        _____                                                       
+    ^..^     \\9                                                     
+    (oo)_____/                                                      
+       WW  WW    Pig
+   
+].split("\n").collect { |l| l.ljust(80) }.join("\n").red_on_blue.bold
 
     gem.add_dependency "sys-uname"
     gem.add_development_dependency "colored"

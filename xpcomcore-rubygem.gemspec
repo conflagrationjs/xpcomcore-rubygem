@@ -9,10 +9,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-07}
+  s.date = %q{2009-10-10}
+  s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
-  s.executables = ["xpcomcore-rubygem-install", "xpcomcore-firefox"]
+  s.executables = ["xpcomcore"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -25,8 +26,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "bin/xpcomcore-firefox",
-     "bin/xpcomcore-rubygem-install",
+     "bin/xpcomcore",
      "extension/README.txt",
      "extension/components/bootstrapper.js",
      "extension/install.rdf",
@@ -43,126 +43,19 @@ Gem::Specification.new do |s|
      "xpcomcore/components/XPCOMCore.js",
      "xpcomcore/doc/files.html",
      "xpcomcore/doc/index.html",
-     "xpcomcore/doc/symbols/Error.html",
-     "xpcomcore/doc/symbols/File.NoSuchFileError.html",
-     "xpcomcore/doc/symbols/File.html",
-     "xpcomcore/doc/symbols/Kernel.html",
-     "xpcomcore/doc/symbols/LoadError.html",
-     "xpcomcore/doc/symbols/SelfConceptError.html",
-     "xpcomcore/doc/symbols/Sys.html",
-     "xpcomcore/doc/symbols/XPCBuiltins.html",
      "xpcomcore/doc/symbols/_global_.html",
+     "xpcomcore/doc/symbols/error.html",
+     "xpcomcore/doc/symbols/file.html",
+     "xpcomcore/doc/symbols/file.nosuchfileerror.html",
+     "xpcomcore/doc/symbols/kernel.html",
+     "xpcomcore/doc/symbols/loaderror.html",
+     "xpcomcore/doc/symbols/selfconcepterror.html",
      "xpcomcore/doc/symbols/src/lib_file.js.html",
      "xpcomcore/doc/symbols/src/lib_kernel.js.html",
      "xpcomcore/doc/symbols/src/lib_sys.js.html",
      "xpcomcore/doc/symbols/src/lib_xpc_builtins.js.html",
-     "xpcomcore/etc/jsdoc-toolkit/README.txt",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Chain.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Dumper.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Hash.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Link.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Namespace.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Opt.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Reflection.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/String.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/frame/Testrun.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/handlers/FOODOC.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/handlers/XMLDOC.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/handlers/XMLDOC/DomReader.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/handlers/XMLDOC/XMLDoc.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/handlers/XMLDOC/XMLParse.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/DocComment.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/DocTag.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/JsDoc.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/JsPlate.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Lang.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Parser.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/PluginManager.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Symbol.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/SymbolSet.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/TextStream.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Token.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/TokenReader.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/TokenStream.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Util.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/lib/JSDOC/Walker.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/main.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/commentSrcJson.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/frameworkPrototype.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/functionCall.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/publishSrcHilite.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/symbolLink.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/tagParamConfig.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/plugins/tagSynonyms.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/run.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/t/TestDoc.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/t/runner.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/addon.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/anon_inner.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/augments.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/augments2.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/borrows.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/borrows2.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/config.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/constructs.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/encoding.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/encoding_other.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/event.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/exports.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/functions_anon.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/functions_nested.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/global.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/globals.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/ignore.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/inner.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/jsdoc_test.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/lend.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/memberof.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/memberof_constructor.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/module.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/name.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/namespace_nested.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/nocode.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/oblit_anon.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/overview.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/param_inline.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/params_optional.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/prototype.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/prototype_nested.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/prototype_oblit.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/prototype_oblit_constructor.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/public.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/scripts/code.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/scripts/notcode.txt",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/shared.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/shared2.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/shortcuts.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/static_this.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/synonyms.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/tosource.js",
-     "xpcomcore/etc/jsdoc-toolkit/app/test/variable_redefine.js",
-     "xpcomcore/etc/jsdoc-toolkit/changes.txt",
-     "xpcomcore/etc/jsdoc-toolkit/conf/sample.conf",
-     "xpcomcore/etc/jsdoc-toolkit/java/build.xml",
-     "xpcomcore/etc/jsdoc-toolkit/java/build_1.4.xml",
-     "xpcomcore/etc/jsdoc-toolkit/java/classes/js.jar",
-     "xpcomcore/etc/jsdoc-toolkit/java/src/JsDebugRun.java",
-     "xpcomcore/etc/jsdoc-toolkit/java/src/JsRun.java",
-     "xpcomcore/etc/jsdoc-toolkit/jsdebug.jar",
-     "xpcomcore/etc/jsdoc-toolkit/jsrun.jar",
-     "xpcomcore/etc/jsdoc-toolkit/jsrun.sh",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/allclasses.tmpl",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/allfiles.tmpl",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/class.tmpl",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/index.tmpl",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/publish.js",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/static/default.css",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/static/header.html",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/static/index.html",
-     "xpcomcore/etc/jsdoc-toolkit/templates/jsdoc/symbol.tmpl",
+     "xpcomcore/doc/symbols/sys.html",
+     "xpcomcore/doc/symbols/xpcbuiltins.html",
      "xpcomcore/lib/file.js",
      "xpcomcore/lib/kernel.js",
      "xpcomcore/lib/sys.js",
@@ -178,16 +71,15 @@ Gem::Specification.new do |s|
      "xpcomcore/test/xpc_builtins_test.js"
   ]
   s.homepage = %q{http://github.com/gabrielg/xpcomcore-rubygem}
-  s.post_install_message = %q{
-[1m[31m[44m                                                                                [0m[0m
-[1m[31m[44m                       PAY HEED TO THIS ANNOYING MESSAGE                        [0m[0m
-[1m[31m[44m                                                                                [0m[0m
-
-The XPCOMCore gem has been installed but you still need to complete installation
-by hand. Run the command [1m[4mxpcomcore-rubygem-install[0m[0m without options to get
-usage information on using it to install the bootstrapper code for this gem.
-
-}
+  s.post_install_message = %q{[1m[31m[44m                                                                                
+                                                                                
+    STEP 1. OBTAIN A PIG. THIS ONE WILL DO:                                     
+                                                                                
+        _____                                                                   
+    ^..^     \9                                                                 
+    (oo)_____/                                                                  
+       WW  WW    Pig                                                            
+                                                                                [0m[0m}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
@@ -203,13 +95,16 @@ usage information on using it to install the bootstrapper code for this gem.
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sys-uname>, [">= 0"])
+      s.add_runtime_dependency(%q<cmdparse>, [">= 0"])
       s.add_development_dependency(%q<colored>, [">= 0"])
     else
       s.add_dependency(%q<sys-uname>, [">= 0"])
+      s.add_dependency(%q<cmdparse>, [">= 0"])
       s.add_dependency(%q<colored>, [">= 0"])
     end
   else
     s.add_dependency(%q<sys-uname>, [">= 0"])
+    s.add_dependency(%q<cmdparse>, [">= 0"])
     s.add_dependency(%q<colored>, [">= 0"])
   end
 end

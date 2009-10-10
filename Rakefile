@@ -7,7 +7,7 @@ begin
   
   Jeweler::Tasks.new do |gem|
     gem.name = "xpcomcore-rubygem"
-    gem.executables = %w[xpcomcore-rubygem-install xpcomcore-firefox]
+    gem.executables = %w[xpcomcore]
     gem.summary = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.description = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.email = "gabriel.gironda@gmail.com"
@@ -26,6 +26,7 @@ begin
 ].split("\n").collect { |l| l.ljust(80) }.join("\n").red_on_blue.bold
 
     gem.add_dependency "sys-uname"
+    gem.add_dependency "cmdparse"
     gem.add_development_dependency "colored"
   end
   Jeweler::GemcutterTasks.new

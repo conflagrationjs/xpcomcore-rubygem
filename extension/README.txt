@@ -1,1 +1,0 @@
-This extension was installed by xpcomcore-rubygem. See http://github.com/gabrielg/xpcomcore-rubygem or http://conflagrationjs.org for details.

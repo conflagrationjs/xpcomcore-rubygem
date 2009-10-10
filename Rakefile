@@ -27,7 +27,7 @@ begin
 
     gem.add_dependency "sys-uname"
     gem.add_dependency "cmdparse"
-    gem.add_dependency "jeweler"
+    gem.add_dependency "jeweler", ">=1.2.1"
     gem.add_development_dependency "colored"
   end
   Jeweler::GemcutterTasks.new

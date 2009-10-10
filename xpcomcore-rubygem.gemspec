@@ -16,14 +16,14 @@ Gem::Specification.new do |s|
   s.executables = ["xpcomcore"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+     "README.markdown"
   ]
   s.files = [
     ".document",
      ".gitignore",
      ".gitmodules",
      "LICENSE",
-     "README.rdoc",
+     "README.markdown",
      "Rakefile",
      "VERSION",
      "bin/xpcomcore",

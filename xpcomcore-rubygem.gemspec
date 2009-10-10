@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xpcomcore-rubygem}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
@@ -27,13 +27,15 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/xpcomcore",
-     "extension/README.txt",
-     "extension/components/bootstrapper.js",
-     "extension/install.rdf",
      "lib/xpcomcore-rubygem.rb",
      "lib/xpcomcore-rubygem/commands.rb",
      "lib/xpcomcore-rubygem/commands/generate.rb",
      "lib/xpcomcore-rubygem/commands/launch.rb",
+     "templates/application/application.ini.erb",
+     "templates/application/chrome/chrome.manifest.erb",
+     "templates/application/chrome/content/xul/main_window.xul.erb",
+     "templates/application/defaults/preferences/prefs.js.erb",
+     "templates/shared/bootstrapper.js",
      "test/test_helper.rb",
      "test/xpcomcore-rubygem_test.rb",
      "xpcomcore-rubygem.gemspec",
@@ -99,15 +101,18 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sys-uname>, [">= 0"])
       s.add_runtime_dependency(%q<cmdparse>, [">= 0"])
+      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<colored>, [">= 0"])
     else
       s.add_dependency(%q<sys-uname>, [">= 0"])
       s.add_dependency(%q<cmdparse>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<colored>, [">= 0"])
     end
   else
     s.add_dependency(%q<sys-uname>, [">= 0"])
     s.add_dependency(%q<cmdparse>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<colored>, [">= 0"])
   end
 end

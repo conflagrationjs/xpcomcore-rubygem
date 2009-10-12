@@ -25,8 +25,8 @@ XPCOMCoreBootstrapper.prototype = {
           
       this.puts("Loading XPCOMCore Bootstrapper from " + xpcomcoreBootstrapper);
       Components.utils.import("file://" + xpcomcoreBootstrapper);
-      this.checkVersion();            
-      this.puts("XPCOMCore bootstrapped with version " + XPCOMCoreConfig.getProperty('version');
+      this.checkVersion();
+      this.puts("XPCOMCore bootstrapped with version " + XPCOMCoreConfig.getProperty('version'));
     } catch (e) {
       this.puts("Exception caught. Quitting.\n" + e);
       this.forceQuit();

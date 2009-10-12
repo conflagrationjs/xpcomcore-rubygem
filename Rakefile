@@ -16,6 +16,8 @@ begin
     gem.files = (gem.files + FileList["xpcomcore/**/*"]).uniq
     gem.post_install_message = %Q[
 
+    Welcome to XPCOMCore.
+    
     STEP 1. OBTAIN A PIG. THIS ONE WILL DO:                         
  
         _____                                                       

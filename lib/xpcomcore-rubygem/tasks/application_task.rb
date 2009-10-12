@@ -17,7 +17,7 @@ module XPCOMCore
       def invoke
         @ini_file = Pathname(IniLocation)
         raise("The ini file at '#{ini_file}' doesn't exist or is not writable.") unless @ini_file.exist? && @ini_file.writable?
-        @ini_file.open('w') do |f|
+        @ini_file.open('r+') do |f|
           write_build_id(f)
           write_version(f)
         end

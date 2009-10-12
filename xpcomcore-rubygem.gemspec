@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xpcomcore-rubygem}
-  s.version = "0.5.2"
+  s.version = "0.5.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
      "lib/xpcomcore-rubygem/commands/generate/library.rb",
      "lib/xpcomcore-rubygem/commands/generate/template_helpers.rb",
      "lib/xpcomcore-rubygem/commands/launch.rb",
+     "lib/xpcomcore-rubygem/tasks/application_task.rb",
      "templates/application/application.ini.erb",
      "templates/application/chrome/chrome.manifest.erb",
      "templates/application/chrome/content/xul/main_window.xul.erb",

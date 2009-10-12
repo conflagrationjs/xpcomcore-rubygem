@@ -30,6 +30,7 @@ module XPCOMCore
         contents = file.read
         file.truncate(0)
         build_id =  UUIDTools::UUID.random_create
+        file.seek(0)
         file.write(contents.sub(/^BuildID=.*$/, "BuildID=#{build_id}"))
       end
       
@@ -38,6 +39,7 @@ module XPCOMCore
         contents = file.read
         file.truncate(0)
         version = File.read('VERSION').strip
+        file.seek(0)
         file.write(contents.sub(/^Version=.*$/, "Version=#{version}"))
       end
       

@@ -6,6 +6,7 @@ module XPCOMCore
     class GenerateCommand
       
       class ApplicationCommand < JewelerBuilderCommand
+        BuilderTaskCode = "require 'xpcomcore-rubygem/tasks/application_task.rb'\nXPCOMCore::Tasks::ApplicationTask.new"
         
         def initialize
           super('application', false) # Doesn't take subcommands
@@ -19,8 +20,13 @@ module XPCOMCore
           with_rakefile_in(project_path) do |rakefile|
             add_jsdoc_toolkit_doc_task(rakefile, :task_name => "doc:app", :doc_dir => "xpcomcore/app/doc", :doc_paths => %w[xpcomcore/app/chrome xpcomcore/app/components])
             add_xultestrunner_test_task(rakefile, :task_name => "test:app", :test_libs => %w[xpcomcore/app/chrome], :test_pattern => "xpcomcore/app/test/**/*_test.js")
+            add_xpcomcore_application_build_task(rakefile)
           end
           copy_template_application(gem_name, project_path)
+        end
+        
+        def add_xpcomcore_application_build_task(rakefile)
+          append_to(rakefile, BuilderTaskCode)
         end
         
         def copy_template_application(gem_name, project_path)

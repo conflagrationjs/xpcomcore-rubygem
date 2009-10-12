@@ -84,6 +84,8 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/gabrielg/xpcomcore-rubygem}
   s.post_install_message = %q{[1m[31m[44m                                                                                
                                                                                 
+    Welcome to XPCOMCore.                                                       
+                                                                                
     STEP 1. OBTAIN A PIG. THIS ONE WILL DO:                                     
                                                                                 
         _____                                                                   

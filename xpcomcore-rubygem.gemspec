@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-10}
+  s.date = %q{2009-10-11}
   s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
@@ -30,21 +30,27 @@ Gem::Specification.new do |s|
      "lib/xpcomcore-rubygem.rb",
      "lib/xpcomcore-rubygem/commands.rb",
      "lib/xpcomcore-rubygem/commands/generate.rb",
+     "lib/xpcomcore-rubygem/commands/generate/application.rb",
+     "lib/xpcomcore-rubygem/commands/generate/jeweler_builder_command.rb",
+     "lib/xpcomcore-rubygem/commands/generate/library.rb",
+     "lib/xpcomcore-rubygem/commands/generate/template_helpers.rb",
      "lib/xpcomcore-rubygem/commands/launch.rb",
      "templates/application/application.ini.erb",
      "templates/application/chrome/chrome.manifest.erb",
      "templates/application/chrome/content/xul/main_window.xul.erb",
+     "templates/application/components/bootstrapper.js",
      "templates/application/defaults/preferences/prefs.js.erb",
-     "templates/shared/bootstrapper.js",
+     "templates/shared/jsdoc_doc_task.erb",
+     "templates/shared/xultestrunner_test_task.erb",
      "test/test_helper.rb",
      "test/xpcomcore-rubygem_test.rb",
      "xpcomcore-rubygem.gemspec",
      "xpcomcore/LICENSE",
      "xpcomcore/README",
      "xpcomcore/Rakefile",
-     "xpcomcore/VERSION.yml",
      "xpcomcore/bin/popen_helper.sh",
      "xpcomcore/bootstrapper.js",
+     "xpcomcore/build_properties.yml",
      "xpcomcore/components/XPCOMCore.js",
      "xpcomcore/doc/files.html",
      "xpcomcore/doc/index.html",
@@ -101,18 +107,21 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sys-uname>, [">= 0"])
       s.add_runtime_dependency(%q<cmdparse>, [">= 0"])
-      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
+      s.add_runtime_dependency(%q<uuidtools>, [">= 2.0.0"])
+      s.add_runtime_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_development_dependency(%q<colored>, [">= 0"])
     else
       s.add_dependency(%q<sys-uname>, [">= 0"])
       s.add_dependency(%q<cmdparse>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
+      s.add_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_dependency(%q<colored>, [">= 0"])
     end
   else
     s.add_dependency(%q<sys-uname>, [">= 0"])
     s.add_dependency(%q<cmdparse>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
+    s.add_dependency(%q<jeweler>, ["= 1.2.1"])
     s.add_dependency(%q<colored>, [">= 0"])
   end
 end

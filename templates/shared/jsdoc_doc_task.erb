@@ -1,0 +1,7 @@
+gem 'jsdoc-toolkit'
+require 'jsdoc-toolkit/doc_task'
+JsDocToolkit::DocTask.new(<%=@task_name.inspect%>) do |doc|
+  doc.jsdoc_dir = <%=@doc_dir.inspect%>
+  <% @doc_paths.each do |doc_path| %>doc.jsdoc_files << <%=doc_path.inspect %>
+  <% end %>
+end

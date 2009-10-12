@@ -92,7 +92,7 @@ module XPCOMCore
       
       def find_xulrunner
         XULRunnerLocators[runner_type][CurrentPlatform].any? do |locator|
-          location = locator.call
+          location = locator.call.strip
           location.empty? ? nil : (break(location))
         end
       end

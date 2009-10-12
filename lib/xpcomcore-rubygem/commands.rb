@@ -27,7 +27,7 @@ module XPCOMCore
     end
     
     def self.load_commands
-      (Pathname(__FILE__).parent + "commands").each_entry do |entry|
+      (XPCOMCore::GemRoot + "lib/xpcomcore-rubygem/commands").each_entry do |entry|
         next unless entry.extname == ".rb"
         require "xpcomcore-rubygem/commands/#{entry.basename}"
       end

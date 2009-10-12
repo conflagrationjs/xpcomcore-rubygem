@@ -8,6 +8,8 @@ var XPCOMCoreBootstrapper = function() {
 
 XPCOMCoreBootstrapper.prototype = {
   bootstrapped: false,
+  xpcomcoreEnvVar: 'XPCOMCORE',
+  
   classDescription: "XPCOMCore Bootstrapper Component",
   contractID: "@conflagrationjs.org/xpcomcore/bootstrapper;1",
   classID: Components.ID("{5412c380-b3b2-11de-8a39-0800200c9a66}"),
@@ -16,38 +18,51 @@ XPCOMCoreBootstrapper.prototype = {
   
   observe: function(subject, topic, data) {
     if (topic != "xpcom-startup") { return false; }
-    if (this.bootstrapped) {
-      dump("\n\nXPCOMCore already bootstrapped.\n\n");
-    } else {      
-      var env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment);
-      var xpcomcoreBootstrapper = env.exists('XPCOMCORE') && env.get('XPCOMCORE');
-      if (xpcomcoreBootstrapper) { 
-        try {
-          var iniFile = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("XCurProcD", Components.interfaces.nsIFile);
-          iniFile.append("application.ini");
-          iniFile.QueryInterface(Components.interfaces.nsILocalFile);
-
-          var iniParser = Components.classes["@mozilla.org/xpcom/ini-parser-factory;1"].getService(Components.interfaces.nsIINIParserFactory).createINIParser(iniFile);
-          var xpcomCoreMinVersion = iniParser.getString('XPCOMCore', 'MinVersion');
-        
-          dump("\n\nLoading XPCOMCore Bootstrapper from " + xpcomcoreBootstrapper + ".\n\n");
-          Components.utils.import("file://" + xpcomcoreBootstrapper);          
-          var versionComparator = Components.classes["@mozilla.org/xpcom/version-comparator;1"].createInstance(Components.interfaces.nsIVersionComparator);
+    if (this.bootstrapped) { this.puts("XPCOMCore already bootstrapped."); return true; }
+    try {
+      var xpcomcoreBootstrapper = this.getBootstrapper();
+      if (!xpcomcoreBootstrapper) { throw("No bootstrapper was found. Are you sure " + this.xpcomcoreEnvVar + " is set in your environment?"); }
           
-          if (versionComparator.compare(XPCOMCoreConfig.getProperty('version'), xpcomCoreMinVersion) < 0) {
-            throw("XPCOMCore version " + xpcomCoreMinVersion + " is required but we were bootstrapped with " + XPCOMCoreConfig.getProperty('version') + ".");
-          }
-          
-          dump("\n\nXPCOMCore bootstrapped with version " + XPCOMCoreConfig.getProperty('version') + ".\n\n");
-        } catch (e) {
-          dump("\nException caught. Quitting.\n" + e + "\n");
-          var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-          appStartup.quit(Components.interfaces.nsIAppStartup.eForceQuit);
-        }
-      } else {
-        dump("\n\nNot loading XPCOMCore Bootstrapper.\n\n");
-      }      
+      this.puts("Loading XPCOMCore Bootstrapper from " + xpcomcoreBootstrapper);
+      Components.utils.import("file://" + xpcomcoreBootstrapper);
+      this.checkVersion();            
+      this.puts("XPCOMCore bootstrapped with version " + XPCOMCoreConfig.getProperty('version');
+    } catch (e) {
+      this.puts("Exception caught. Quitting.\n" + e);
+      this.forceQuit();
     }
+  },
+  
+  getBootstrapper: function() {
+    var env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment);
+    return env.exists(this.xpcomcoreEnvVar) && env.get(this.xpcomcoreEnvVar);
+  },
+  
+  getMinXPCOMCoreVersion: function() {
+    var iniFile = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("XCurProcD", Components.interfaces.nsIFile);
+    iniFile.append("application.ini");
+    iniFile.QueryInterface(Components.interfaces.nsILocalFile);
+
+    var iniParser = Components.classes["@mozilla.org/xpcom/ini-parser-factory;1"].getService(Components.interfaces.nsIINIParserFactory).createINIParser(iniFile);
+    return iniParser.getString('XPCOMCore', 'MinVersion');
+  },
+  
+  checkVersion: function() {
+    var xpcomCoreMinVersion = this.getMinXPCOMCoreVersion();
+    var versionComparator = Components.classes["@mozilla.org/xpcom/version-comparator;1"].createInstance(Components.interfaces.nsIVersionComparator);
+    
+    if (versionComparator.compare(XPCOMCoreConfig.getProperty('version'), xpcomCoreMinVersion) < 0) {
+      throw("XPCOMCore version " + xpcomCoreMinVersion + " is required but we were bootstrapped with " + XPCOMCoreConfig.getProperty('version') + ".");
+    }
+  },
+  
+  forceQuit: function() {
+    var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
+    appStartup.quit(Components.interfaces.nsIAppStartup.eForceQuit);
+  },
+  
+  puts: function(str) {
+    dump(str + "\n");
   }
   
 };

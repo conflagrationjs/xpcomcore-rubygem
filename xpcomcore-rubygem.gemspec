@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-11}
+  s.date = %q{2009-10-13}
   s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
@@ -53,6 +53,7 @@ Gem::Specification.new do |s|
      "xpcomcore/bootstrapper.js",
      "xpcomcore/build_properties.yml",
      "xpcomcore/components/XPCOMCore.js",
+     "xpcomcore/components/XPCOMCoreCLH.js",
      "xpcomcore/doc/files.html",
      "xpcomcore/doc/index.html",
      "xpcomcore/doc/symbols/_global_.html",

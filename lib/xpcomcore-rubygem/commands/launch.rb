@@ -87,7 +87,7 @@ module XPCOMCore
       def set_env_and_launch(xulrunner_bin, application_ini, args)
         ENV['XPCOMCORE'] = ENV['XPCOMCORE'] || XPCOMCore::BootstrapperLocation.to_s
         XPCOMCore::CommandParser.log("Using XPCOMCore bootstrapper at '#{ENV['XPCOMCORE']}'")
-        exec(xulrunner_bin, *["-app", application_ini, *args])
+        exec(xulrunner_bin, *["-app", application_ini, "-no-remote", *args])
       end
       
       def find_xulrunner

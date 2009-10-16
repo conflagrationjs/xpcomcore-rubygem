@@ -2,6 +2,7 @@ require 'rubygems'
 require 'xpcomcore-rubygem/commands'
 require 'sys/uname'
 require 'pathname'
+require 'iniparse'
 
 module XPCOMCore
   class CommandParser
@@ -12,39 +13,102 @@ module XPCOMCore
         reason 'Application not found'
       end
       
-      class XULRunnerNotFoundError < CmdParse::ParseError
-        reason 'XULRunner not found'
-      end
+      class BaseLauncher
+        class XULRunnerNotFoundError < CmdParse::ParseError
+          reason 'XULRunner not found'
+        end
+        
+        def initialize(options)
+          @options = options
+        end
+        
+        def launch
+          ENV['XPCOMCORE'] = ENV['XPCOMCORE'] || XPCOMCore::BootstrapperLocation.to_s
+          XPCOMCore::CommandParser.log("Using XPCOMCore bootstrapper at '#{ENV['XPCOMCORE']}'")
+        end
+        
+      private
+        
+        def launch_xre(xre_location)
+          XPCOMCore::CommandParser.log("Launching XUL application using XULRunner '#{xre_location}' from '#{@options[:ini_path].expand_path}'")
+          exec(xre_location, *["-app", @options[:ini_path].expand_path.to_s, "-no-remote", *@options[:args]])
+        end
+        
+        def raise_xulrunner_not_found(search_location, runner_type)
+          raise(XULRunnerNotFoundError, "Sorry, we couldn't find #{runner_type}. We checked in #{search_location} but it didn't seem to be there.")
+        end
+        
+      end # BaseLauncher
+      
+      class DarwinLauncher < BaseLauncher
+        StubLocationRelativeToIni = "../../stub_runners/%s.app"
+
+        def launch
+          super
+          xre_location = send(:"locate_#{@options[:runner_type]}")
+          if stub_location = find_stub
+            launch_from_stub(xre_location, stub_location)
+          else
+            launch_xre(xre_location)
+          end
+        end
+        
+      private
+        
+        def launch_from_stub(xre_location, stub_location)
+          ENV['REAL_EXECUTABLE'] = xre_location.to_s
+          XPCOMCore::CommandParser.log("Launching XUL application using stub '#{stub_location}' and XULRunner '#{xre_location}' from '#{@options[:ini_path].expand_path}'")
+          exec("open", stub_location.to_s, "-W", "--args", *["-app", @options[:ini_path].expand_path.to_s, "-no-remote", *@options[:args]])
+        end
+        
+        def find_stub
+          parsed_ini = IniParse.parse(@options[:ini_path].read)
+          app_name = parsed_ini['App']['Name']
+          stub_path = (@options[:ini_path] + (StubLocationRelativeToIni % app_name)).expand_path
+          stub_path.exist? ? stub_path : nil
+        end
+        
+        def locate_firefox
+          applications = `osascript -e 'POSIX path of (path to applications folder)'`.strip
+          firefox_bin = (Pathname(applications) + "Firefox.app/Contents/MacOS/firefox-bin").expand_path
+          firefox_bin.exist? ? firefox_bin.to_s : raise_xulrunner_not_found(firefox_bin, "Firefox")
+        end
+            
+        def locate_xulrunner
+          library = `osascript -e 'POSIX path of (path to library folder)'`.strip
+          xulrunner_bin = (Pathname(library) + "Frameworks/XUL.framework/xulrunner-bin").expand_path
+          xulrunner_bin.exist? ? xulrunner_bin.to_s : raise_xulrunner_not_found(xulrunner_bin, "XULRunner")
+        end
+
+      end # DarwinLauncher
+      
+      class LinuxLauncher < BaseLauncher
+        
+        def launch
+          xre_location = send(:"locate_#{@options[:runner_type]}")
+          launch_xre(xre_location)
+        end
+        
+      private
+        
+        def locate_firefox
+          firefox_bin = [`which firefox-bin`, `which firefox`].detect do |path|
+            !path.strip.empty?
+          end
+          firefox_bin ? firefox_bin.strip : raise_xulrunner_not_found("$PATH", "Firefox")
+        end
+        
+        def locate_xulrunner
+          xulrunner_bin = [`which xulrunner-bin`, `which xulrunner`].detect do |path|
+            !path.strip.empty?
+          end
+          xulrunner_bin ? xulrunner_bin.strip : raise_xulrunner_not_found("$PATH", "XULRunner")
+        end
+
+      end # LinuxLauncher
       
       GemAppRelativePath = "xpcomcore/app/application.ini"
       CurrentPlatform = Sys::Uname.sysname.downcase.to_sym
-      
-      # FIXME - clean up this xulrunnerlocator crap that takes up like half the class
-      XULRunnerLocators = {:firefox => {}, :xulrunner => {}}
-      XULRunnerLocators[:firefox][:unix] = [lambda { `which firefox-bin`}, lambda { `which firefox`}]
-      XULRunnerLocators[:xulrunner][:unix] = [lambda { `which xulrunner-bin`}, lambda { `which xulrunner`}]
-      
-      # Linux uses the default UNIX locators
-      XULRunnerLocators[:firefox][:linux] = XULRunnerLocators[:firefox][:unix]
-      XULRunnerLocators[:xulrunner][:linux] = XULRunnerLocators[:xulrunner][:unix]
-      
-      # Darwin does some extra magic
-      XULRunnerLocators[:firefox][:darwin] = XULRunnerLocators[:firefox][:unix] + [
-        lambda do 
-          applications = `osascript -e 'POSIX path of (path to applications folder)'`.strip
-          firefox_bin = Pathname(applications) + "Firefox.app/Contents/MacOS/firefox-bin"
-          firefox_bin.exist? ? firefox_bin.expand_path.to_s : ''
-        end
-      ]
-      
-      XULRunnerLocators[:xulrunner][:darwin] = XULRunnerLocators[:xulrunner][:unix] + [
-        lambda do 
-          library = `osascript -e 'POSIX path of (path to library folder)'`.strip
-          xulrunner_bin = Pathname(library) + "Frameworks/XUL.framework/xulrunner-bin"
-          xulrunner_bin.exist? ? xulrunner_bin.expand_path.to_s : ''
-        end
-      ]
-
       
       def initialize
         super('launch', false, # Doesn't take subcommands
@@ -69,34 +133,19 @@ module XPCOMCore
       end
       
       def runner_type
-        use_xulrunner ? :xulrunner : :firefox
+        use_xulrunner? ? :xulrunner : :firefox
       end
       
     private
     
       def launch_app(application_ini_path, args)
-        xulrunner_path = find_xulrunner
-        if xulrunner_path
-          XPCOMCore::CommandParser.log("Launching XUL application using '#{xulrunner_path}' from '#{application_ini_path}'")
-          set_env_and_launch(xulrunner_path, application_ini_path, args)
-        else
-          raise(XULRunnerNotFoundError, "A valid XULRunner executable could not be found.")
-        end
+        launcher_class = self.class.const_get(:"#{CurrentPlatform.to_s.capitalize}Launcher")
+        launcher = launcher_class.new(:ini_path => application_ini_path, :runner_type => runner_type, :args => args)
+        launcher.launch
+      rescue NameError => e
+        puts "Probably couldn't get a launcher for your platform. Sorry. #{e}"
       end
-      
-      def set_env_and_launch(xulrunner_bin, application_ini, args)
-        ENV['XPCOMCORE'] = ENV['XPCOMCORE'] || XPCOMCore::BootstrapperLocation.to_s
-        XPCOMCore::CommandParser.log("Using XPCOMCore bootstrapper at '#{ENV['XPCOMCORE']}'")
-        exec(xulrunner_bin, *["-app", application_ini, "-no-remote", *args])
-      end
-      
-      def find_xulrunner
-        XULRunnerLocators[runner_type][CurrentPlatform].any? do |locator|
-          location = locator.call.strip
-          location.empty? ? nil : (break(location))
-        end
-      end
-      
+            
       def find_app(app_path)
         fs_path = Pathname(Dir.pwd) + app_path + "application.ini"
         if fs_path.exist?

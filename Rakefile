@@ -29,6 +29,8 @@ begin
 
     gem.add_dependency "sys-uname"
     gem.add_dependency "cmdparse"
+    gem.add_dependency "plist"
+    gem.add_dependency "iniparse"
     gem.add_dependency "uuidtools", ">=2.0.0"
     gem.add_dependency "jeweler", "=1.2.1"
     gem.add_development_dependency "colored"

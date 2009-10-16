@@ -1,12 +1,16 @@
 require "xpcomcore-rubygem/commands/generate/jeweler_builder_command"
 require 'uuidtools'
+require 'fileutils'
 
 module XPCOMCore
   class CommandParser
     class GenerateCommand
-      
+      # TODO - move a bunch of stuff like gem_name and project_path to instance vars.
+      # Also move out the stub application copying stuff.
+      # Really, just clean this up in general.
       class ApplicationCommand < JewelerBuilderCommand
         BuilderTaskCode = "require 'xpcomcore-rubygem/tasks/application_task.rb'\nXPCOMCore::Tasks::ApplicationTask.new"
+        StubRoot = XPCOMCore::GemRoot + "ext/stub_runners"
         
         def initialize
           super('application', false) # Doesn't take subcommands
@@ -23,6 +27,18 @@ module XPCOMCore
             add_xpcomcore_application_build_task(rakefile)
           end
           copy_template_application(gem_name, project_path)
+          copy_stub_application(gem_name, project_path)
+        end
+
+        # FIXME / TODO - we only know how to deal with Darwin stub apps for now.
+        # Also, this code is messy and crap.
+        def copy_stub_application(gem_name, project_path)
+          stub_app_name = gem_name.capitalize
+          dest_app = (project_path + "xpcomcore/stub_runners/#{stub_app_name}.app").expand_path
+          dest_app.mkpath
+          stub_app = (StubRoot + "darwin/StubApp.app").expand_path
+          FileUtils.cp_r(stub_app.to_s + "/.", dest_app.expand_path.to_s)
+          system(%Q[cd "#{project_path}" && rake version:write && rake xpcomcore:update_app])
         end
         
         def add_xpcomcore_application_build_task(rakefile)

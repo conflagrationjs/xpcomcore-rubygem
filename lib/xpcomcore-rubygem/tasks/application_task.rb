@@ -1,14 +1,17 @@
 require 'rake'
 require 'xpcomcore-rubygem'
 require 'uuidtools'
+require 'xpcomcore-rubygem/building/stub_app_helpers'
 
+# TODO - update this to use iniparse.
 module XPCOMCore
   module Tasks
     class ApplicationTask
-      IniLocation = "xpcomcore/app/application.ini"
+      AppLocation = "xpcomcore/app"
+      IniLocation = "#{AppLocation}/application.ini"
       
-      def initialize(task_name = "xpcomcore:update_xul_application")
-        desc("Updates the embedded XUL application's application.ini file for release.")
+      def initialize(task_name = "xpcomcore:update_app")
+        desc("Updates the embedded XUL application's application.ini file for release and generates any stub apps necessary.")
         task(task_name) { self.invoke }
         # Adds this as a dependency to gemspec so it updates along with it.
         task(:gemspec => task_name)
@@ -21,9 +24,16 @@ module XPCOMCore
           write_build_id(f)
           write_version(f)
         end
+        update_stub_app
       end
     
     private
+      
+      def update_stub_app
+        updater = XPCOMCore::Building::StubAppHelpers::AppUpdater.new(:xul_app_path => Pathname(AppLocation).expand_path,
+                                                                      :stub_dir => Pathname("xpcomcore/stub_runners").expand_path)
+        updater.update
+      end
       
       def write_build_id(file)
         file.rewind

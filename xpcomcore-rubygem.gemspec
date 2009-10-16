@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-13}
+  s.date = %q{2009-10-15}
   s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
@@ -27,7 +27,14 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/xpcomcore",
+     "ext/stub_runners/darwin/StubApp.app/Contents/Info.plist",
+     "ext/stub_runners/darwin/StubApp.app/Contents/MacOS/stub_runner",
+     "ext/stub_runners/darwin/StubApp.app/Contents/PkgInfo",
+     "ext/stub_runners/darwin/StubApp.app/Contents/Resources/.gitignore",
+     "ext/stub_runners/darwin/src/Makefile",
+     "ext/stub_runners/darwin/src/stub_runner.c",
      "lib/xpcomcore-rubygem.rb",
+     "lib/xpcomcore-rubygem/building/stub_app_helpers.rb",
      "lib/xpcomcore-rubygem/commands.rb",
      "lib/xpcomcore-rubygem/commands/generate.rb",
      "lib/xpcomcore-rubygem/commands/generate/application.rb",
@@ -39,6 +46,7 @@ Gem::Specification.new do |s|
      "templates/application/application.ini.erb",
      "templates/application/chrome/chrome.manifest.erb",
      "templates/application/chrome/content/xul/main_window.xul.erb",
+     "templates/application/chrome/icons/default/default.png",
      "templates/application/components/bootstrapper.js",
      "templates/application/defaults/preferences/prefs.js.erb",
      "templates/shared/jsdoc_doc_task.erb",
@@ -111,12 +119,16 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sys-uname>, [">= 0"])
       s.add_runtime_dependency(%q<cmdparse>, [">= 0"])
+      s.add_runtime_dependency(%q<plist>, [">= 0"])
+      s.add_runtime_dependency(%q<iniparse>, [">= 0"])
       s.add_runtime_dependency(%q<uuidtools>, [">= 2.0.0"])
       s.add_runtime_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_development_dependency(%q<colored>, [">= 0"])
     else
       s.add_dependency(%q<sys-uname>, [">= 0"])
       s.add_dependency(%q<cmdparse>, [">= 0"])
+      s.add_dependency(%q<plist>, [">= 0"])
+      s.add_dependency(%q<iniparse>, [">= 0"])
       s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
       s.add_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_dependency(%q<colored>, [">= 0"])
@@ -124,6 +136,8 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<sys-uname>, [">= 0"])
     s.add_dependency(%q<cmdparse>, [">= 0"])
+    s.add_dependency(%q<plist>, [">= 0"])
+    s.add_dependency(%q<iniparse>, [">= 0"])
     s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
     s.add_dependency(%q<jeweler>, ["= 1.2.1"])
     s.add_dependency(%q<colored>, [">= 0"])

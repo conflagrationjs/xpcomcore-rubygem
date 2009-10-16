@@ -16,7 +16,7 @@ if gems
   spec = gems.last
   expected_libs = Pathname(spec.full_gem_path) + lib_path
   exit 1 unless expected_libs.exist? && expected_libs.directory?
-  print({:lib_dir => expected_libs.expand_path.to_s}.to_json)
+  print({'libDir' => expected_libs.expand_path.to_s}.to_json)
   exit 0
 else
   exit 1

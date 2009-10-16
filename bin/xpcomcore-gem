@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "json"
+require 'pathname'
+# TODO - add support for fetching a specific version.
+# This isn't an 'xpcomcore' command because we don't
+# want the baggage associated and want this to return
+# as fast as possible.
+# TODO - clean this sucker up.
+app_name = ARGV[0]
+exit 1 unless app_name
+
+lib_path = "xpcomcore/lib"
+gems = Gem.source_index.find_name(app_name)
+if gems
+  spec = gems.last
+  expected_libs = Pathname(spec.full_gem_path) + lib_path
+  exit 1 unless expected_libs.exist? && expected_libs.directory?
+  print({:lib_dir => expected_libs.expand_path.to_s}.to_json)
+  exit 0
+else
+  exit 1
+end

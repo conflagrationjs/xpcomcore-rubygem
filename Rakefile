@@ -7,7 +7,7 @@ begin
   
   Jeweler::Tasks.new do |gem|
     gem.name = "xpcomcore-rubygem"
-    gem.executables = %w[xpcomcore]
+    gem.executables = %w[xpcomcore xpcomcore-gem]
     gem.summary = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.description = %Q{Gem to allow for using XPCOMCore via RubyGems}
     gem.email = "gabriel.gironda@gmail.com"
@@ -31,6 +31,7 @@ begin
     gem.add_dependency "cmdparse"
     gem.add_dependency "plist"
     gem.add_dependency "iniparse"
+    gem.add_dependency "json"
     gem.add_dependency "uuidtools", ">=2.0.0"
     gem.add_dependency "jeweler", "=1.2.1"
     gem.add_development_dependency "colored"

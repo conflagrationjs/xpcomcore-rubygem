@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xpcomcore-rubygem}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-15}
+  s.date = %q{2009-10-16}
   s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
      "ext/stub_runners/darwin/StubApp.app/Contents/PkgInfo",
      "ext/stub_runners/darwin/StubApp.app/Contents/Resources/.gitignore",
      "ext/stub_runners/darwin/src/Makefile",
+     "ext/stub_runners/darwin/src/stub_runner",
      "ext/stub_runners/darwin/src/stub_runner.c",
      "lib/xpcomcore-rubygem.rb",
      "lib/xpcomcore-rubygem/building/stub_app_helpers.rb",

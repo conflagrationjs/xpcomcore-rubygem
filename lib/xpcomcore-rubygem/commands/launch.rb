@@ -3,6 +3,7 @@ require 'xpcomcore-rubygem/commands'
 require 'sys/uname'
 require 'pathname'
 require 'iniparse'
+require 'tempfile'
 
 module XPCOMCore
   class CommandParser
@@ -58,7 +59,21 @@ module XPCOMCore
         def launch_from_stub(xre_location, stub_location)
           ENV['REAL_EXECUTABLE'] = xre_location.to_s
           XPCOMCore::CommandParser.log("Launching XUL application using stub '#{stub_location}' and XULRunner '#{xre_location}' from '#{@options[:ini_path].expand_path}'")
-          exec("open", stub_location.to_s, "-W", "--args", *["-app", @options[:ini_path].expand_path.to_s, "-no-remote", *@options[:args]])
+          prepare_for_output_hijacking
+          system("open", stub_location.to_s, "--args", *["-app", @options[:ini_path].expand_path.to_s, "-no-remote", *@options[:args]])
+          puts "I helpfully hijacked stdout and stderr back from LaunchServices for you. What follows is coming from your application."
+          exec(%Q[cat "#{ENV['HIJACKED_STDOUT']}" & cat "#{ENV['HIJACKED_STDERR']}" >&2])
+        end
+        
+        def prepare_for_output_hijacking
+          ENV['HIJACK_OUTPUT'] = 'true'
+          output_file, error_file = Tempfile.new("stdout.pipe."), Tempfile.new("stdout.pipe.")
+          output_path, error_path = output_file.path, error_file.path
+          output_file.close!
+          error_file.close!
+          system("mkfifo", "-m", "600", output_path) && system("mkfifo", "-m", "600", error_path)
+          ENV['HIJACKED_STDOUT'] = output_path
+          ENV['HIJACKED_STDERR'] = error_path
         end
         
         def find_stub

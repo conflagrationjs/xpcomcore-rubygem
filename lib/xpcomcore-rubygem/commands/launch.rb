@@ -85,6 +85,7 @@ module XPCOMCore
       class LinuxLauncher < BaseLauncher
         
         def launch
+          super
           xre_location = send(:"locate_#{@options[:runner_type]}")
           launch_xre(xre_location)
         end

@@ -5,15 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xpcomcore-rubygem}
-  s.version = "0.6.2"
+  s.version = "0.6.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
   s.date = %q{2009-10-16}
-  s.default_executable = %q{xpcomcore}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
-  s.executables = ["xpcomcore"]
+  s.executables = ["xpcomcore", "xpcomcore-gem"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.markdown"
@@ -27,6 +26,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/xpcomcore",
+     "bin/xpcomcore-gem",
      "ext/stub_runners/darwin/StubApp.app/Contents/Info.plist",
      "ext/stub_runners/darwin/StubApp.app/Contents/MacOS/stub_runner",
      "ext/stub_runners/darwin/StubApp.app/Contents/PkgInfo",
@@ -121,6 +121,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<cmdparse>, [">= 0"])
       s.add_runtime_dependency(%q<plist>, [">= 0"])
       s.add_runtime_dependency(%q<iniparse>, [">= 0"])
+      s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<uuidtools>, [">= 2.0.0"])
       s.add_runtime_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_development_dependency(%q<colored>, [">= 0"])
@@ -129,6 +130,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<cmdparse>, [">= 0"])
       s.add_dependency(%q<plist>, [">= 0"])
       s.add_dependency(%q<iniparse>, [">= 0"])
+      s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
       s.add_dependency(%q<jeweler>, ["= 1.2.1"])
       s.add_dependency(%q<colored>, [">= 0"])
@@ -138,6 +140,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<cmdparse>, [">= 0"])
     s.add_dependency(%q<plist>, [">= 0"])
     s.add_dependency(%q<iniparse>, [">= 0"])
+    s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<uuidtools>, [">= 2.0.0"])
     s.add_dependency(%q<jeweler>, ["= 1.2.1"])
     s.add_dependency(%q<colored>, [">= 0"])

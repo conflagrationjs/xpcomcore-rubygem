@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ggironda"]
-  s.date = %q{2009-10-16}
+  s.date = %q{2009-10-21}
   s.description = %q{Gem to allow for using XPCOMCore via RubyGems}
   s.email = %q{gabriel.gironda@gmail.com}
   s.executables = ["xpcomcore", "xpcomcore-gem"]
@@ -73,12 +73,14 @@ Gem::Specification.new do |s|
      "xpcomcore/doc/symbols/selfconcepterror.html",
      "xpcomcore/doc/symbols/src/lib_file.js.html",
      "xpcomcore/doc/symbols/src/lib_kernel.js.html",
+     "xpcomcore/doc/symbols/src/lib_stdlib_rubygems.js.html",
      "xpcomcore/doc/symbols/src/lib_sys.js.html",
      "xpcomcore/doc/symbols/src/lib_xpc_builtins.js.html",
      "xpcomcore/doc/symbols/sys.html",
      "xpcomcore/doc/symbols/xpcbuiltins.html",
      "xpcomcore/lib/file.js",
      "xpcomcore/lib/kernel.js",
+     "xpcomcore/lib/stdlib/rubygems.js",
      "xpcomcore/lib/sys.js",
      "xpcomcore/lib/xpc_builtins.js",
      "xpcomcore/test/file_test.js",
@@ -88,7 +90,9 @@ Gem::Specification.new do |s|
      "xpcomcore/test/fixtures/mad_world.js",
      "xpcomcore/test/fixtures/syntax_error.js",
      "xpcomcore/test/kernel_test.js",
+     "xpcomcore/test/stdlib/rubygems_test.js",
      "xpcomcore/test/sys_test.js",
+     "xpcomcore/test/test_helper.js",
      "xpcomcore/test/xpc_builtins_test.js"
   ]
   s.homepage = %q{http://github.com/gabrielg/xpcomcore-rubygem}
